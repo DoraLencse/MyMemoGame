@@ -1,14 +1,20 @@
-/*
- * Create a list that holds all of your cards
- */
 
-
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
+let cards = ['fa fa-diamond',
+			 'fa fa-paper-plane-o',
+			 'fa fa-anchor', 
+			 'fa fa-bolt', 
+			 'fa fa-cube', 
+			 'fa fa-anchor', 
+			 'fa fa-leaf', 
+			 'fa fa-bicycle', 
+			 'fa fa-diamond', 
+			 'fa fa-bomb', 
+			 'fa fa-leaf', 
+			 'fa fa-bomb', 
+			 'fa fa-bolt', 
+			 'fa fa-bicycle', 
+			 'fa fa-paper-plane-o', 
+			 'fa fa-cube'];
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -25,6 +31,12 @@ function shuffle(array) {
     return array;
 }
 
+cards = shuffle(cards);
+
+const cardContent = document.querySelectorAll('li.card');
+for(let i = 0; i < cardContent.length; i++){
+	cardContent[i].innerHTML = '<i class="'+cards[i]+'"></i>';
+}
 
 /*
  * set up the event listener for a card. If a card is clicked:
