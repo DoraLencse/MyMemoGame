@@ -21,10 +21,11 @@ const cardContent = document.querySelectorAll('li.card');
 const pickCard = document.getElementsByClassName('card');
 const openedCards = document.getElementsByClassName('open show');
 const opened = [];
+const flipBack = document.getElementsByClassName('card nomatch')
 
 
 startGame();
-clickOnCards();
+
 console.log(openedCards);
 console.log(opened);
 
@@ -62,35 +63,48 @@ for(let i = 0; i < cardContent.length; i++){
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
  
+if (opened.length <= 3) {
+	clickOnCards();
+}
  
 function clickOnCards() {
 for(let i = 0; i < pickCard.length; i++){
 	pickCard[i].addEventListener('click', function() {
 	pickCard[i].setAttribute('class', 'card open show');
 	opened.push(pickCard[i]);
+	
 	compareCards();
+	
 	moves++;
 });
+
+
 }
 }
 
 function compareCards () {
 
 	if (opened.length == 2 ) {		
-			
+				
 			if(opened[0].innerHTML !== opened[1].innerHTML) {
-			opened[0].setAttribute('class', 'card');
-			opened[1].setAttribute('class', 'card');
-			opened.pop();
-			opened.pop();
-			compareCards();
+			opened[0].setAttribute('class', 'card nomatch');
+			opened[1].setAttribute('class', 'card nomatch');
 			
+			opened.pop();
+			opened.pop();
+			
+
 			} else if (opened[0].innerHTML === opened[1].innerHTML){
 			opened[0].setAttribute('class', 'card match');
 			opened[1].setAttribute('class', 'card match');
 			opened.pop();
 			opened.pop();
-			compareCards();
-			}		 		
-	}		
+			
+		}		 		
+	}	
+			setTimeout(function(){
+			for(let i = 0; i < flipBack.length; i++){
+			flipBack[i].setAttribute('class', 'card');
+			} }, 1500);
+			
 }
