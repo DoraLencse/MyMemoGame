@@ -19,15 +19,22 @@ let cards = ['fa fa-diamond',
 let moves = 0;
 const cardContent = document.querySelectorAll('li.card');
 const pickCard = document.getElementsByClassName('card');
+const picked = [];
 const openedCards = document.getElementsByClassName('open show');
 const opened = [];
-const flipBack = document.getElementsByClassName('card nomatch')
-
+const flipBack = document.getElementsByClassName('nomatch');
+const matchedCards = document.getElementsByClassName('match');
+const matched = [];
 
 startGame();
 
+if (opened.length <= 2){
+	clickOnCards();
+}
+		
 console.log(openedCards);
 console.log(opened);
+console.log(matched);
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -63,23 +70,20 @@ for(let i = 0; i < cardContent.length; i++){
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
  
-if (opened.length <= 3) {
-	clickOnCards();
-}
- 
 function clickOnCards() {
-for(let i = 0; i < pickCard.length; i++){
-	pickCard[i].addEventListener('click', function() {
-	pickCard[i].setAttribute('class', 'card open show');
-	opened.push(pickCard[i]);
+            
+			for(let i = 0; i < pickCard.length; i++){	
+			pickCard[i].addEventListener('click', function() {
+			pickCard[i].setAttribute('class', 'card open show');
+			opened.push(pickCard[i]);
+			picked.push(pickCard[i]);
 	
-	compareCards();
+			compareCards();
 	
-	moves++;
-});
+			moves++;
+			}, true);			
+			}
 
-
-}
 }
 
 function compareCards () {
@@ -88,23 +92,24 @@ function compareCards () {
 				
 			if(opened[0].innerHTML !== opened[1].innerHTML) {
 			opened[0].setAttribute('class', 'card nomatch');
-			opened[1].setAttribute('class', 'card nomatch');
-			
+			opened[1].setAttribute('class', 'card nomatch');			
 			opened.pop();
 			opened.pop();
 			
-
 			} else if (opened[0].innerHTML === opened[1].innerHTML){
-			opened[0].setAttribute('class', 'card match');
-			opened[1].setAttribute('class', 'card match');
+			opened[0].setAttribute('class', 'match');
+			opened[1].setAttribute('class', 'match');	
+			matched.push(opened[0]);
+			matched.push(opened[1]);			
 			opened.pop();
 			opened.pop();
-			
-		}		 		
-	}	
-			setTimeout(function(){
+			}
+		
+	}
+
+	 setTimeout(function(){
 			for(let i = 0; i < flipBack.length; i++){
 			flipBack[i].setAttribute('class', 'card');
-			} }, 1500);
+			} }, 1500);				
 			
 }
