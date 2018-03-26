@@ -97,8 +97,8 @@ function compareCards () {
 			opened.pop();
 			
 			} else if (opened[0].innerHTML === opened[1].innerHTML){
-			opened[0].setAttribute('class', 'match');
-			opened[1].setAttribute('class', 'match');	
+			opened[0].setAttribute('class', 'card match');
+			opened[1].setAttribute('class', 'card match');	
 			matched.push(opened[0]);
 			matched.push(opened[1]);			
 			opened.pop();
