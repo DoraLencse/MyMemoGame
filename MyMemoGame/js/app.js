@@ -15,26 +15,36 @@ let cards = ['fa fa-diamond',
 			 'fa fa-bicycle', 
 			 'fa fa-paper-plane-o', 
 			 'fa fa-cube'];
-			 
-let moves = 0;
-const cardContent = document.querySelectorAll('li.card');
-const pickCard = document.getElementsByClassName('card');
-const picked = [];
-const openedCards = document.getElementsByClassName('open show');
-const opened = [];
-const flipBack = document.getElementsByClassName('nomatch');
-const matchedCards = document.getElementsByClassName('match');
-const matched = [];
 
+	
+let moves = 0;
+let cardContent = document.querySelectorAll('li.card');
+let pickCard = document.getElementsByClassName('card');
+let picked = [];
+let openedCards = document.getElementsByClassName('open show');
+let opened = [];
+let flipBack = document.getElementsByClassName('nomatch');
+let matchedCards = document.getElementsByClassName('match');
+let matched = [];
+			 
 startGame();
 
+/*
+document.getElementsByClassName('restart fa fa-repeat').onclick = function() {restartGame()};
+const movesCount = document.getElementsByClassName('moves');
+movesCount.innerHTML = '<span class="moves">'+moves+'blabla</span> Moves';*/
+
+/*
 if (opened.length <= 2){
 	clickOnCards();
-}
-		
+}*/
+
+
+/*****FOR TEST *************/		
 console.log(openedCards);
 console.log(opened);
 console.log(matched);
+/*****FOR TEST *************/
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -52,11 +62,18 @@ function shuffle(array) {
 }
 
 function startGame() {
+
 cards = shuffle(cards);
 
 for(let i = 0; i < cardContent.length; i++){
 	cardContent[i].innerHTML = '<i class="'+cards[i]+'"></i>';
 }
+
+clickOnCards();
+
+/*if (opened.length <= 2){
+	clickOnCards();
+}*/
 }
 
 /*
@@ -71,16 +88,17 @@ for(let i = 0; i < cardContent.length; i++){
  */
  
 function clickOnCards() {
-            
+	            
 			for(let i = 0; i < pickCard.length; i++){	
 			pickCard[i].addEventListener('click', function() {
 			pickCard[i].setAttribute('class', 'card open show');
 			opened.push(pickCard[i]);
 			picked.push(pickCard[i]);
 	
-			compareCards();
+	        moves++;
 	
-			moves++;
+			compareCards();
+			
 			}, true);			
 			}
 
@@ -104,6 +122,10 @@ function compareCards () {
 			opened.pop();
 			opened.pop();
 			}
+			
+			for(let i = 0; i < matched.length; i++){
+			matched[i].style.pointerEvents="none";
+			}
 		
 	}
 
@@ -112,4 +134,46 @@ function compareCards () {
 			flipBack[i].setAttribute('class', 'card');
 			} }, 1500);				
 			
+	endGame();
 }
+
+function endGame () {
+	
+	if (matched.length === 16) { 
+	 
+	alert("Congratulations! You win! :)");
+	
+	setTimeout(function(){
+	 for (let i = 0; i< pickCard.length; i++){
+	pickCard[i].setAttribute('class', 'card');
+	//matched.shift();
+    pickCard[i].style.pointerEvents="auto";	
+	 } }, 800);
+	 matched.splice(0,16);
+	 opened.splice(0,16);
+	 
+	 restartGame();
+	}	
+}
+
+function matchedDelete () {
+ if (matched.length > 0) {
+		for (let i= 0; i < matched.length; i++) {
+	delete matched[i];	
+	}
+	
+	matched = [];		
+	}	
+}
+
+function restartGame () {
+
+matchedDelete();	
+ 
+startGame();	
+}
+
+	
+	
+	
+
