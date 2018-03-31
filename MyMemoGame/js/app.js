@@ -25,20 +25,20 @@ let flipBack = document.getElementsByClassName('nomatch');
 let matchedCards = document.getElementsByClassName('match');
 let matched = [];
 let movesCount = document.querySelector('span.moves');
-
+let starFirst = document.getElementById('first-star');
+let starSecond = document.getElementById('second-star');
+let starThird = document.getElementById('third-star');
 let restartIcon = document.querySelector('div.restart');
 
 restartIcon.onclick = function() {
 	
 	moves = 0;
-	
 	movesCount.innerHTML = '<span class="moves">'+moves+'</span>';
 	
-	//setTimeout(function(){
 	 for (let i = 0; i< pickCard.length; i++){
 	pickCard[i].setAttribute('class', 'card');
     pickCard[i].style.pointerEvents="auto";	
-	 } //}, 800);
+	 }
 	 matched.splice(0,16);
 	 opened.splice(0,16);
 	 	
@@ -46,17 +46,6 @@ restartIcon.onclick = function() {
 }
 			 
 startGame();
-
-
-
-
-
-/*****FOR TEST *************/		
-console.log(openedCards);
-console.log(opened);
-console.log(matched);
-console.log(picked)
-/*****FOR TEST *************/
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -84,17 +73,6 @@ for(let i = 0; i < cardContent.length; i++){
 clickOnCards();
 
 }
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
  
 function clickOnCards() {
 	            
@@ -103,8 +81,11 @@ function clickOnCards() {
 			pickCard[i].onclick = function() {
 		    moves ++;
 			movesCount.innerHTML = '<span class="moves">'+moves+'</span>';
+			
+			rating();
 			pickCard[i].setAttribute('class', 'card open show');			
 			opened.push(pickCard[i]);
+  
   
 			compareCards();
 			
@@ -118,7 +99,6 @@ function compareCards () {
 	if (opened.length == 2 ) {		
 				
 			if(opened[0].innerHTML !== opened[1].innerHTML) {
-	
 			opened[0].setAttribute('class', 'card nomatch');
 			opened[1].setAttribute('class', 'card nomatch');		
 			opened.pop();
@@ -141,9 +121,23 @@ function compareCards () {
 	 setTimeout(function(){
 			for(let i = 0; i < flipBack.length; i++){
 			flipBack[i].setAttribute('class', 'card');
-			} }, 1500);				
+			} }, 1200);				
 			
 	endGame();
+}
+
+function rating () {
+	if (moves === 16 ) {
+	starFirst.style.visibility='hidden';
+	}
+	
+	if (moves === 32 ) {
+	starSecond.style.visibility='hidden';
+	}
+	
+	if (moves === 56 ) {
+	starThird.style.visibility='hidden';
+	}
 }
 
 function endGame () {
@@ -166,7 +160,7 @@ function endGame () {
 
 function matchedDelete () {
  if (matched.length > 0) {
-		for (let i= 0; i < matched.length; i++) {
+	for (let i= 0; i < matched.length; i++) {
 	delete matched[i];	
 	}	
 	matched = [];		
@@ -175,8 +169,18 @@ function matchedDelete () {
 
 function restartGame () {
 
+starFirst.style.visibility='visible';
+starSecond.style.visibility='visible';
+starThird.style.visibility='visible';
+	
+for (let i = 0; i< pickCard.length; i++){
+	pickCard[i].setAttribute('class', 'card');
+    pickCard[i].style.pointerEvents="auto";	
+	 }
+
 matchedDelete();
-moves = 0;	
+moves = 0;
+movesCount.innerHTML = '<span class="moves">'+moves+'</span>';	
  
 startGame();	
 }
