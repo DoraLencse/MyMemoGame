@@ -69,6 +69,8 @@ function shuffle(array) {
 }
 
 function startGame() {
+	
+startTimer();
 
 cards = shuffle(cards);
 
@@ -77,27 +79,26 @@ for(let i = 0; i < cardContent.length; i++){
 }
 
 clickOnCards();
-
 }
  
 function clickOnCards() {
 	         
 			for(let i = 0; i < pickCard.length; i++){				
-			//pickCard[i].addEventListener('click', function() {
 			pickCard[i].onclick = function() {
 			pickCard[i].style.pointerEvents="none";				
 		    moves ++;			
 			movesCount.innerHTML = '<span class="moves">'+moves+'</span>';
+			
 			rating();
+			
 			pickCard[i].setAttribute('class', 'card open show');
 								
 			opened.push(pickCard[i]);
 			
 			compareCards();
-			
-			}/*)*/;	
+					
+			};	
 			}
-			startTimer();
 }
 
 function compareCards () {
@@ -121,20 +122,29 @@ function compareCards () {
 			}
 			
 			for(let i = 0; i < pickCard.length; i++){
-			pickCard[i].style.pointerEvents="auto";
+			pickCard[i].style.pointerEvents='auto';
 			}
 			
 			for(let i = 0; i < matched.length; i++){
-			matched[i].style.pointerEvents="none";
-			}					
-	}
-
-	 setTimeout(function(){
-			for(let i = 0; i < flipBack.length; i++){
-			flipBack[i].setAttribute('class', 'card');
-			} }, 1200);				
+			matched[i].style.pointerEvents='none';
+			}	
 			
-	endGame();
+			for(let i = 0; i < flipBack.length; i++){
+			flipBack[i].style.pointerEvents='none';
+			}	
+	}
+			setTimeout (flip, 2000);
+			
+			function flip() {
+			for(let i = 0; i < flipBack.length; i++){
+			flipBack[i].style.pointerEvents='auto';
+			flipBack[i].setAttribute('class', 'card');
+			}
+
+}
+	if (matched.length === 16){		
+	setTimeout (endGame, 2000);
+	}
 }
 
 function rating () {
@@ -153,17 +163,13 @@ function rating () {
 
 function endGame () {
 	
-	if (matched.length === 16) { 
-	
 	stopTimer();
- 
-	alert("Congratulations! You win with "+moves+" moves and "+finalTime+" seconds ! :)");	
-	
-/*	if (confirm("Congratulations! You win with "+moves+" moves and "+finalTime+" seconds ! :) Would you like to play again?")) {
+	 
+	setTimeout ( function () {if (confirm("Congratulations! You win with "+moves+" moves and "+finalTime+" seconds ! :) Would you like to play again?")) {
     restartGame();
 } else {
     alert("Thank you to play with my game!");
-}*/
+}} , 1500);	
 	
 	setTimeout(function(){
 	 for (let i = 0; i< pickCard.length; i++){
@@ -173,8 +179,6 @@ function endGame () {
 	 matched.splice(0,16);
 	 opened.splice(0,16);
 	 
-	 restartGame();
-	}	
 }
 
 function matchedDelete () {
@@ -231,7 +235,7 @@ timer();
 
 
 function startTimer (){
-if(moves > 0) {
+if(moves >= 1) {
 timer();	
 }else clearTimer();
 }
