@@ -114,3 +114,8 @@ h1 {
     float: right;
     cursor: pointer;
 }
+
+.timer-place {
+  padding-left: 3rem;
+  color: black;
+}
