@@ -36,22 +36,12 @@ let minutes = 0;
 let hours = 0;
 let t;
 
-restartIcon.onclick = function() {
-	
-	moves = 0;
-	movesCount.innerHTML = '<span class="moves">'+moves+'</span>';
-	
-	 for (let i = 0; i< pickCard.length; i++){
-	pickCard[i].setAttribute('class', 'card');
-    pickCard[i].style.pointerEvents="auto";	
-	 }
-	 matched.splice(0,16);
-	 opened.splice(0,16);
-	 	
-	restartGame()
+restartIcon.onclick = function() {	 	 	
+	restartGame();
 }
 
 startGame();
+
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -69,8 +59,6 @@ function shuffle(array) {
 }
 
 function startGame() {
-	
-startTimer();
 
 cards = shuffle(cards);
 
@@ -86,7 +74,12 @@ function clickOnCards() {
 			for(let i = 0; i < pickCard.length; i++){				
 			pickCard[i].onclick = function() {
 			pickCard[i].style.pointerEvents="none";				
-		    moves ++;			
+		    moves++;
+
+			//startTimer();  ---- somehow it is working when we reload the page and after a winning game, but with the restart button is not.
+			
+			startTimer();	
+			
 			movesCount.innerHTML = '<span class="moves">'+moves+'</span>';
 			
 			rating();
@@ -98,11 +91,11 @@ function clickOnCards() {
 			compareCards();
 					
 			};	
-			}
+			}			
 }
 
 function compareCards () {
-
+	
 	if (opened.length == 2 ) {		
 				
 			if(opened[0].innerHTML !== opened[1].innerHTML) {
@@ -143,8 +136,9 @@ function compareCards () {
 
 }
 	if (matched.length === 16){		
-	setTimeout (endGame, 2000);
+	setTimeout (endGame, 1000);
 	}
+	
 }
 
 function rating () {
@@ -168,8 +162,8 @@ function endGame () {
 	setTimeout ( function () {if (confirm("Congratulations! You win with "+moves+" moves and "+finalTime+" seconds ! :) Would you like to play again?")) {
     restartGame();
 } else {
-    alert("Thank you to play with my game!");
-}} , 1500);	
+    alert("Thank you for playing with my game!");
+}} , 1000);	
 	
 	setTimeout(function(){
 	 for (let i = 0; i< pickCard.length; i++){
@@ -191,8 +185,13 @@ function matchedDelete () {
 }
 
 function restartGame () {
-	
+
+moves = 0;
+movesCount.innerHTML = '<span class="moves">'+moves+'</span>';	
+
+stopTimer();	
 clearTimer();
+
 starFirst.style.visibility='visible';
 starSecond.style.visibility='visible';
 starThird.style.visibility='visible';
@@ -203,8 +202,6 @@ for (let i = 0; i< pickCard.length; i++){
 	 }
 
 matchedDelete();
-moves = 0;
-movesCount.innerHTML = '<span class="moves">'+moves+'</span>';	
  
 startGame();	
 }
@@ -228,16 +225,18 @@ function add() {
 	
     timer();
 }
+
+
 function timer() {
     t = setTimeout(add, 1000);
 }
-timer();
+//timer();
 
 
 function startTimer (){
-if(moves >= 1) {
+if(moves === 1) {
 timer();	
-}else clearTimer();
+}
 }
 
 function stopTimer () {
