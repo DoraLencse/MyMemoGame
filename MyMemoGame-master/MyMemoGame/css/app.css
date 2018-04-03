@@ -1,0 +1,235 @@
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
+    font-family: 'Coda', cursive;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+h1 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+}
+
+/*
+ * Styles for the deck of cards
+ */
+
+.deck {
+    width: 660px;
+    min-height: 680px;
+    background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
+    padding: 32px;
+    border-radius: 10px;
+    box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 3em;
+}
+
+.deck .card {
+    height: 125px;
+    width: 125px;
+    background: #2e3d49;
+    font-size: 0;
+    color: #ffffff;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
+	transition: 1s ease-in-out;
+}
+
+.deck .card.open {
+    background: #02b3e4;
+    cursor: default;
+	transform: rotateY(180deg);
+    transform-style: preserve-3d;
+}
+
+.deck .card.show {
+    font-size: 33px;
+}
+
+.deck .card.match {
+    cursor: default;
+    background: #02ccba;
+    font-size: 33px;
+}
+
+.deck .card.nomatch {
+    cursor: default;
+    background: red;
+    font-size: 33px;
+	transform: rotateY(180deg);
+    transform-style: preserve-3d;
+}
+
+/*
+ * Styles for the Score Panel
+ */
+
+.score-panel {
+    text-align: left;
+    width: 345px;
+    margin-bottom: 10px;
+}
+
+.score-panel .stars {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    margin: 0 5px 0 0;
+}
+
+.score-panel .stars li {
+    list-style: none;
+    display: inline-block;
+}
+
+.score-panel .restart {
+    float: right;
+    cursor: pointer;
+}
+
+.timer-place {
+  padding-left: 3rem;
+  color: black;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding: 40px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: #58646d; /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+	color: #58646d;
+    background-color: #fefefe;
+    border-radius: 6px;
+    font-family: "Open Sans", Helvetica, sans-serif;
+    margin: auto;
+    border: 1px solid #888;
+    width: 45%;
+    text-align: center;
+}
+
+.modal-header {
+	border-bottom: 1px solid #dbe2e8;
+	padding: 0 40px 30px 40px;
+}
+
+.modal-header h4 {
+	color: #02ccba;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+}
+
+.modal-body {
+	padding: 30px 40px 30px 40px;
+}
+
+.golden li {
+	color: gold;
+	font-size: 1.8em;
+}
+
+/* The Close Button */
+.btn {
+	border-style: none;
+}
+
+.btn:hover {
+	text-decoration: none;
+    cursor: pointer;
+}
+
+.close {
+	background-color: #58646d;
+    color: #fefefe;
+    display: block;
+    font-size: 28px;
+    font-weight: 600;
+    position: relative;
+    left: 73%;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+}
+
+.icon {
+	width: 150px;
+    height: 150px;
+    display: inline-block;
+}
+
+/* The Restart Button */
+.again {
+	background: #02b3e4;
+	border-radius: 4px;
+    box-shadow: 12px 15px 20px rgba(0,0,0,.1);
+	margin-top: 20px;
+	padding: 1.2em 4em;
+	transition: box-shadow .2s ease-in-out,background-color .2s ease-in-out,border-color .2s ease-in-out;
+
+}
+
+.again:hover,
+.again:focus {
+	box-shadow: 2px 4px 8px 0  rgba(0,0,0,.1);
+	background-color: #148bb1 ;
+}
+
+.again i {
+	color: #fff;
+	padding-right: 2px;
+}
+
+.again p {
+	color: #fff;
+	display: inline;
+	font-family: Open Sans,sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .165em;
+    text-transform: uppercase;
+}
