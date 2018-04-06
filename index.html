@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Memory Game</title>
+    <meta name="description" content="memory game">
+	<meta name="keywords" content="Dóra Lencse, front end developer, memory game, Udacity nanodegree"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Chicle" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
+    <link rel="stylesheet" href="css/app.css">	
+</head>
+<body>
+
+    <!--<div class="container"> -->
+        <section class="left-side">
+		<header>
+           <h1>Memory Game</h1>
+        </header>
+
+        <section class="score-panel">
+        	<ul class="stars">
+        		<li id= "first-star"><i class="fa fa-star"></i></li>
+        		<li id= "second-star"><i class="fa fa-star"></i></li>
+        		<li id= "third-star"><i class="fa fa-star"></i></li>
+        	</ul>
+
+        	<div class="moves">0 Moves</div>
+			<div class="timer-place"><time>00:00:00<time></div>
+            <div class="restart"><i class="fa fa-repeat"></i></div>
+        </section>
+		</section>
+
+		
+		<section class="right-side">
+        <ul class="deck">
+            <li class="card">
+                <i class="fa fa-diamond"></i>
+            </li>
+            <li class="card">
+                <i class="fa fa-paper-plane-o"></i>
+            </li>
+            <li class="card">
+                <i class="fa fa-anchor"></i>
+            </li>
+            <li class="card">
+                <i class="fa fa-bolt"></i>
+            </li>
+            <li class="card">
+                <i class="fa fa-cube"></i>
+            </li>
+            <li class="card">
+                <i class="fa fa-anchor"></i>
+            </li>
+            <li class="card">
+                <i class="fa fa-leaf"></i>
+            </li>
+            <li class="card">
+                <i class="fa fa-bicycle"></i>
+            </li>
+            <li class="card">
+                <i class="fa fa-diamond"></i>
+            </li>
+            <li class="card">
+                <i class="fa fa-bomb"></i>
+            </li>
+            <li class="card">
+                <i class="fa fa-leaf"></i>
+            </li>
+            <li class="card">
+                <i class="fa fa-bomb"></i>
+            </li>
+            <li class="card">
+                <i class="fa fa-bolt"></i>
+            </li>
+            <li class="card">
+                <i class="fa fa-bicycle"></i>
+            </li>
+            <li class="card">
+                <i class="fa fa-paper-plane-o"></i>
+            </li>
+            <li class="card">
+                <i class="fa fa-cube"></i>
+            </li>
+        </ul>
+    </div>
+	<!-- Modal -->
+    <div id="myModal" class="modal">
+         <button type="button" id ="modalClose" class="btn close" data-dismiss="modal">&times;</button>
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <img class="icon" src="img/congrat.jpg" alt="congratulation icon">
+          </div>
+          <div class="modal-body">
+            <p>You are sharp as a tack! You won with <span class="final-move"></span> moves and "<span class="final-time"></span>" seconds !</p>
+            <p>Would you like to play again?</p>
+            <button type="button" class="btn again" data-dismiss="modal">
+                <i class="fa fa-repeat"></i>
+                <p>Let's play again!</p>
+            </button>
+          </div>
+        </div>
+      </div>
+   <!-- </div>-->
+
+    </section>
+    <script src="js/app.js"></script>
+</body>
+</html>
