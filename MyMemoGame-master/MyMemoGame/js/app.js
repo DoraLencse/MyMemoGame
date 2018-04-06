@@ -25,7 +25,7 @@ let opened = [];
 let flipBack = document.getElementsByClassName('nomatch');
 let matchedCards = document.getElementsByClassName('match');
 let matched = [];
-let movesCount = document.querySelector('span.moves');
+let movesCount = document.querySelector('div.moves');
 let moves = 0;
 let starFirst = document.getElementById('first-star');
 let starSecond = document.getElementById('second-star');
@@ -78,7 +78,7 @@ function clickOnCards() {
 			
 			startTimer();	
 			
-			movesCount.innerHTML = '<span class="moves">'+moves+'</span>';
+			movesCount.innerHTML = '<div class="moves">'+moves+' Moves </div>';
 			
 			rating();
 			
@@ -86,7 +86,7 @@ function clickOnCards() {
 								
 			opened.push(pickCard[i]);
 			
-			compareCards();
+			setTimeout (compareCards, 1000);
 					
 			};	
 			}			
@@ -170,7 +170,7 @@ function restartGame () {
 
 closeModal();
 moves = 0;
-movesCount.innerHTML = '<span class="moves">'+moves+'</span>';	
+movesCount.innerHTML = '<div class="moves">'+moves+' Moves </div>';	
 
 stopTimer();	
 clearTimer();
