@@ -73,6 +73,9 @@ function clickOnCards() {
 	         
 			for(let i = 0; i < pickCard.length; i++){				
 			pickCard[i].onclick = function() {
+				if (opened.length === 2) {
+				return
+				} else
 			pickCard[i].style.pointerEvents="none";				
 		    moves++;
 			
