@@ -1,0 +1,479 @@
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding-top: 10px;
+}
+
+body {
+    background: #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
+    font-family: 'Chicle', cursive;
+	color: #fc5b03;
+}
+
+header {
+	width: 100%;
+	text-align: center;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+h1 {
+    font-family: 'Chicle', cursive;
+	color: #fc5b03;
+	margin: 0;
+	font-size: 5rem;
+	padding-bottom: 1rem;
+}
+
+.left-side {
+	float: left;
+	width: 25%;
+	margin: 0 auto 0 4rem;
+	vertical-align: center;
+	padding-top: 5rem;
+	background-color: #2e3d49;
+	min-height: 40rem;
+	border-radius: .625rem;
+    box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
+}
+
+.right-side {
+	float: right;
+	width: 65%;
+}
+
+/*
+ * Styles for the deck of cards
+ */
+
+.deck {
+    width: 40rem;
+    min-height: 40rem;
+    background: linear-gradient(160deg, #f86532 0%, #d5cb4a 100%);
+    padding: 32px;
+    border-radius: 10px;
+    box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 3em;
+}
+
+.deck .card {
+    height: 7.8125rem;
+    width: 7.8125rem;
+    background: #2e3d49;
+    font-size: 0;
+    color: #e8e8e6;
+    border-radius: 7.8125rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 5px 2px 10px 0 rgba(46, 61, 73, 0.5);
+	transition: 1s ease-in-out;
+}
+
+.deck .card.open {
+    background: #d5cb4a;/*#02b3e4;*/
+    cursor: default;
+	color: #2e3d49;
+	transform: rotateY(180deg);
+    transform-style: preserve-3d;
+}
+
+.deck .card.show {
+    font-size: 33px;
+}
+
+.deck .card.match {
+    cursor: default;
+    background: #fc5b03;
+    font-size: 33px;
+}
+
+.deck .card.nomatch {
+    cursor: default;
+    background: red;
+    font-size: 33px;
+	transform: rotateY(180deg);
+    transform-style: preserve-3d;
+}
+
+/*
+ * Styles for the Score Panel
+ */
+
+.score-panel {
+    text-align: center;
+    width: 21.57rem;
+    margin-bottom: 10px;
+	color: #d5cb4a;
+	font-size: 2rem;
+}
+
+.score-panel .stars {
+	margin-bottom: 10px;
+    padding: 0;
+    display: inline-block;
+    margin: 0 5px 0 0;
+}
+
+.score-panel .stars li {
+    list-style: none;
+    display: inline-block;
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+.score-panel .restart {
+    float: center;
+    cursor: pointer;
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+.timer-place {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.moves {
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding: 2.5rem;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: #2e3d49;
+}
+
+/* Modal Content */
+.modal-content {
+	color: #2e3d49;
+    background-color: #fefefe;
+    border-radius: 5px;
+    font-family: 'Roboto', sans-serif;'	
+    margin: auto;
+    border: 1px solid #888;
+    text-align: center;
+	min-width: 15rem;
+}
+
+.modal-header {
+	border-bottom: 1px solid #dbe2e8;
+	padding: 0 40px 30px 40px;
+}
+
+.modal-body {
+	padding: 30px 40px 30px 40px;
+}
+
+/* The Close Button */
+.btn {
+	border-style: none;
+}
+
+.btn:hover {
+	text-decoration: none;
+    cursor: pointer;
+}
+
+.close {
+	background-color: #58646d;
+    color: #fefefe;
+    display: block;
+    font-size: 28px;
+    font-weight: 600;
+    position: relative;
+    left: 80%;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+}
+
+.icon {
+	width: 10rem;
+    height: 10rem;
+    display: inline-block;
+}
+
+/* The Restart Button */
+.again {
+	background: #fc5b03;
+	border-radius: 0.25rem;
+    box-shadow: 1.3rem 1rem 1.3rem rgba(0,0,0,.1);
+	margin-top: 0.8rem;
+	padding: 1.2rem 4rem;
+	transition: box-shadow .2s ease-in-out,background-color .2s ease-in-out,border-color .2s ease-in-out;
+}
+
+.again:hover,
+.again:focus {
+	box-shadow: 2px 4px 8px 0  rgba(0,0,0,.1);
+	background-color: #fc5b03;
+}
+
+.again i {
+	color: #fff;
+	padding-right: 2px;
+}
+
+.again p {
+	color: #fff;
+	display: inline;
+	font-family: 'Roboto', sans-serif;'	
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .165em;
+    text-transform: uppercase;
+}
+
+
+/*************************
+*For Mobile portrait view**
+*************************/
+
+@media screen and (min-width: 200px) and (max-width: 641px) {
+body {
+	width: 100vw;
+	margin: 0 auto 0 auto;
+	font-family: 'Roboto', sans-serif;'	
+}
+
+h1 {
+	font-family: 'Roboto', sans-serif;'
+	margin: 0;
+	font-size: 1rem;
+	padding-bottom: 0.2rem;
+}
+
+.left-side {
+	float: center;
+	width: 100vw;
+	margin: 0 auto 0 auto;
+	vertical-align: center;
+	padding-top: 1rem;
+	min-height: 2rem;
+    box-shadow: none;
+	border-radius: 0;
+}
+
+.right-side {
+	width: 100%;
+	margin-top: 1.6rem;
+	text-align: center;
+}
+
+.deck {
+	float: center;
+    width: 16rem;
+    min-height: 16rem;
+    padding: 1rem;
+    align-items: center;
+    margin: 0;
+	text-align: center;
+	margin: 0 auto 0 auto;
+}
+
+.deck .card {
+    height: 3rem;
+    width: 3rem;
+}
+
+.score-panel {
+    width: 100%;
+    margin-bottom: 10px;
+	font-size: 0.8rem;
+}
+
+.score-panel .stars {
+	width: 15%;
+	float: left;
+	margin-bottom: 10px;
+    padding: 0;
+    display: inline-block;
+    margin: 0 5px 0 0;
+}
+
+.score-panel .stars li {
+    list-style: none;
+    display: inline-block;
+	text-align: center;
+	margin-bottom: 2px;
+}
+
+.score-panel .restart {
+	width: 10%;
+	float: right;
+    cursor: pointer;
+	text-align: left;
+	margin-bottom: 2px;
+}
+
+.timer-place {
+  width: 22%;
+  float: left;
+  margin-bottom: 2px;
+}
+
+.moves {
+	width: 40%;
+	float: left;
+	margin-bottom: 2px;
+}
+
+.deck .card.open {
+    font-size: .8rem;
+	color: #2e3d49;
+}
+
+.deck .card.show {
+    font-size: .8rem;
+	color: #2e3d49;
+}
+
+.deck .card.match {
+    font-size: .8rem;
+}
+
+.deck .card.nomatch {
+    font-size: .8rem;
+}
+}
+
+/****************************
+Tablet_Mobile landscape view*
+*****************************/
+  
+@media screen and (min-width: 645px) and (max-width: 900px){
+
+body {
+	width: 100vw;
+	margin: 0 auto 0 auto;
+	font-family: 'Roboto', sans-serif;'	
+}
+
+header {
+	width: 100%;
+	text-align: center;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+h1 {
+    font-family: 'Chicle', cursive;
+	color: #fc5b03;
+	margin: 0;
+	font-size: 3rem;
+	padding-bottom: 1rem;
+}
+
+.left-side {
+	float: left;
+	width: 35%;
+	margin: 0 auto 0 auto;
+	vertical-align: center;
+	padding-top: 5rem;
+	background-color: #2e3d49;
+	min-height: 40rem;
+	border-radius: .625rem;
+    box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
+}
+
+.right-side {
+	float: right;
+	width: 64%;
+}
+
+.score-panel {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 10px;
+	color: #d5cb4a;
+	font-size: 2rem;
+}
+
+.score-panel .stars {
+	margin-bottom: 10px;
+    padding: 0;
+    display: inline-block;
+    margin: 0 5px 0 0;
+}
+
+.score-panel .stars li {
+    list-style: none;
+    display: inline-block;
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+.score-panel .restart {
+    float: center;
+    cursor: pointer;
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+.timer-place {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.moves {
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+}
+
+/********************
+******Laptop view****
+*********************/
+
+@media screen and (min-width: 733px) and (max-width: 950px){
+
+}
+
+/*****************
+*******Ipad*******
+******************/
+
+@media screen and (width: 768px) and (height: 1024px){
+	
+}
