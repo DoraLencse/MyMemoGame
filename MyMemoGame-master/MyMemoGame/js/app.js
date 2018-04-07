@@ -141,15 +141,15 @@ function compareCards () {
 }
 
 function rating () {
-	if (moves === 16 ) {
+	if (moves === 32 ) {
 	starFirst.style.visibility='hidden';
 	}
 	
-	if (moves === 32 ) {
+	if (moves === 56 ) {
 	starSecond.style.visibility='hidden';
 	}
 	
-	if (moves === 56 ) {
+	if (moves === 72 ) {
 	starThird.style.visibility='hidden';
 	}
 }
@@ -240,6 +240,25 @@ function winMessage() {
 	
 	let resultMove = document.querySelector('.final-move');
 	resultMove.textContent = moves;
+	
+	let finalRating = document.querySelector('.final-rating');
+	
+	
+	if (moves < 32 ) {		
+		finalRating.innerHTML = '<p class="final-rating">Your rating: <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></p>';
+        finalRating.style.cssText = 'color:#fc5b03;';		
+	}
+	
+	if (moves >= 32 && moves <= 56 ) {		
+		finalRating.innerHTML = '<p class="final-rating">Your rating: <i class="fa fa-star"></i><i class="fa fa-star"></i></p>';	
+		finalRating.style.cssText = 'color:#fc5b03;';		
+	}
+	
+	if (moves >= 56 && moves <= 72 ) {
+	finalRating.innerHTML = '<p class="final-rating">Your rating: <i class="fa fa-star"></i></p>';
+	finalRating.style.cssText = 'color:#fc5b03;';	
+	}
+	
 }
 
 function closeModal() {
