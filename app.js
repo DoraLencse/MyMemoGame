@@ -180,6 +180,7 @@ function restartGame () {
 
     closeModal();
     moves = 0;
+    count = 0;
     movesCount.innerHTML = '<div class="moves">'+moves+' Moves </div>';	
 
     stopTimer();	
