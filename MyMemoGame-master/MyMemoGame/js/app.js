@@ -222,7 +222,7 @@ function timer() {
 }
 
 function startTimer (){
-    if(moves === 1) {
+    if(count === 1) {
     timer();	
     }
 }
