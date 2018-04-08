@@ -1,114 +1,271 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Memory Game</title>
-    <meta name="description" content="memory game">
-	<meta name="keywords" content="Dóra Lencse, front end developer, memory game, Udacity nanodegree"> 
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<link href="https://fonts.googleapis.com/css?family=Chicle" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
-    <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-    <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
-    <link rel="stylesheet" href="app.css">	
-</head>
-<body>
+/*GLOBAL PART*/
 
-    <!--<div class="container"> -->
-        <section class="left-side">
-		<header>
-           <h1>Memory Game</h1>
-        </header>
+let cards = ['fa fa-diamond',
+			 'fa fa-paper-plane-o',
+			 'fa fa-anchor', 
+			 'fa fa-bolt', 
+			 'fa fa-cube', 
+			 'fa fa-anchor', 
+			 'fa fa-leaf', 
+			 'fa fa-bicycle', 
+			 'fa fa-diamond', 
+			 'fa fa-bomb', 
+			 'fa fa-leaf', 
+			 'fa fa-bomb', 
+			 'fa fa-bolt', 
+			 'fa fa-bicycle', 
+			 'fa fa-paper-plane-o', 
+			 'fa fa-cube'];
+	
+let cardContent = document.querySelectorAll('li.card');
+let pickCard = document.getElementsByClassName('card');
+let openedCards = document.getElementsByClassName('open show');
+let opened = [];
+let flipBack = document.getElementsByClassName('nomatch');
+let flipCards = [];
+let matchedCards = document.getElementsByClassName('match');
+let matched = [];
+let movesCount = document.querySelector('div.moves');
+let moves = 0;
+let starFirst = document.getElementById('first-star');
+let starSecond = document.getElementById('second-star');
+let starThird = document.getElementById('third-star');
+let restartIcon = document.querySelector('div.restart');
+let finalTime = "";
+let timerDisplay = document.getElementsByClassName('timer-place')[0];
+let seconds = 0;
+let minutes = 0;
+let hours = 0;
+let t;
+let modalDisplay = document.getElementById('myModal');
 
-        <section class="score-panel">
-        	<ul class="stars">
-        		<li id= "first-star"><i class="fa fa-star"></i></li>
-        		<li id= "second-star"><i class="fa fa-star"></i></li>
-        		<li id= "third-star"><i class="fa fa-star"></i></li>
-        	</ul>
+/* Shuffle function from http://stackoverflow.com/a/2450976 */
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
 
-        	<div class="moves">0 Moves</div>
-			<div class="timer-place"><time>00:00:00<time></div>
-            <div class="restart"><i class="fa fa-repeat"></i></div>
-        </section>
-		</section>
+    while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+	
+    return array;
+}
 
-		
-		<section class="right-side">
-        <ul class="deck">
-            <li class="card">
-                <i class="fa fa-diamond"></i>
-            </li>
-            <li class="card">
-                <i class="fa fa-paper-plane-o"></i>
-            </li>
-            <li class="card">
-                <i class="fa fa-anchor"></i>
-            </li>
-            <li class="card">
-                <i class="fa fa-bolt"></i>
-            </li>
-            <li class="card">
-                <i class="fa fa-cube"></i>
-            </li>
-            <li class="card">
-                <i class="fa fa-anchor"></i>
-            </li>
-            <li class="card">
-                <i class="fa fa-leaf"></i>
-            </li>
-            <li class="card">
-                <i class="fa fa-bicycle"></i>
-            </li>
-            <li class="card">
-                <i class="fa fa-diamond"></i>
-            </li>
-            <li class="card">
-                <i class="fa fa-bomb"></i>
-            </li>
-            <li class="card">
-                <i class="fa fa-leaf"></i>
-            </li>
-            <li class="card">
-                <i class="fa fa-bomb"></i>
-            </li>
-            <li class="card">
-                <i class="fa fa-bolt"></i>
-            </li>
-            <li class="card">
-                <i class="fa fa-bicycle"></i>
-            </li>
-            <li class="card">
-                <i class="fa fa-paper-plane-o"></i>
-            </li>
-            <li class="card">
-                <i class="fa fa-cube"></i>
-            </li>
-        </ul>
-    </div>
-	<!-- Modal -->
-    <div id="myModal" class="modal">
-         <button type="button" id ="modalClose" class="btn close" data-dismiss="modal">&times;</button>
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <img class="icon" src="congrat.jpg" alt="congratulation icon">
-          </div>
-          <div class="modal-body">
-            <p>You are sharp as a tack! You won with <span class="final-move"></span> moves and "<span class="final-time"></span>" seconds !</p>
-            <p>Would you like to play again?</p>
-            <button type="button" class="btn again" data-dismiss="modal">
-                <i class="fa fa-repeat"></i>
-                <p>Let's play again!</p>
-            </button>
-          </div>
-        </div>
-      </div>
-   <!-- </div>-->
+restartIcon.onclick = function () {location.reload(true)};
 
-    </section>
-    <script src="app.js"></script>
-</body>
-</html>
+startGame();
+
+function startGame() {
+
+    cards = shuffle(cards);
+    for(let i = 0; i < cardContent.length; i++){
+	cardContent[i].innerHTML = '<i class="'+cards[i]+'"></i>';
+    }
+
+    clickOnCards();
+}
+ 
+function clickOnCards() {
+	         
+    for(let i = 0; i < pickCard.length; i++){				
+			
+    pickCard[i].onclick = function() {
+        if (opened.length === 2) {
+		return
+		} else
+		pickCard[i].style.pointerEvents="none";				
+		moves++;
+			
+	    startTimer();	
+			
+		movesCount.innerHTML = '<div class="moves">'+moves+' Moves </div>';
+			
+		rating();
+			
+		pickCard[i].setAttribute('class', 'card open show');
+								
+		opened.push(pickCard[i]);
+			
+		setTimeout (compareCards, 1000);
+					
+		};	
+	}			
+}
+
+function compareCards () {
+	
+	if (opened.length === 2 ) {		
+				
+		if(opened[0].innerHTML !== opened[1].innerHTML) {
+		opened[0].setAttribute('class', 'card nomatch');
+		opened[1].setAttribute('class', 'card nomatch');
+		flipCards.push(opened[0]);
+		flipCards.push(opened[1]);		
+		opened.pop();
+		opened.pop();
+			
+		} else if (opened[0].innerHTML === opened[1].innerHTML){
+		opened[0].setAttribute('class', 'card match');
+		opened[1].setAttribute('class', 'card match');	
+		matched.push(opened[0]);
+		matched.push(opened[1]);			
+		opened.pop();
+		opened.pop();
+		}
+			
+		for(let i = 0; i < pickCard.length; i++){
+		pickCard[i].style.pointerEvents='auto';
+		}
+			
+		for(let i = 0; i < matched.length; i++){
+		matched[i].style.pointerEvents='none';
+		}	
+			
+		for(let i = 0; i < flipBack.length; i++){
+		flipBack[i].style.pointerEvents='none';
+		}	
+	}
+	setTimeout (flip, 1000);
+			
+	function flip() {
+	    for(let i = 0; i < flipBack.length; i++){
+	    flipBack[i].style.pointerEvents='auto';
+	    flipBack[i].setAttribute('class', 'card');
+	    }
+	}
+				
+	if (matched.length === 16){		
+	setTimeout (endGame, 1000);
+	}	
+}
+
+function rating () {
+	if (moves === 32 ) {
+	starFirst.style.visibility='hidden';
+	}
+	
+	if (moves === 56 ) {
+	starSecond.style.visibility='hidden';
+	}
+	
+	if (moves === 72 ) {
+	starThird.style.visibility='hidden';
+	}
+}
+
+function endGame () {	
+	stopTimer();	 
+	setTimeout ( winMessage, 1000); 
+}
+
+function matchedDelete () {
+    if (matched.length > 0) {
+	    for (let i= 0; i < matched.length; i++) {
+	    delete matched[i];	
+	    }	
+	matched = [];		
+	}	
+}
+
+function restartGame () {
+
+    closeModal();
+    moves = 0;
+    movesCount.innerHTML = '<div class="moves">'+moves+' Moves </div>';	
+
+    stopTimer();	
+    clearTimer();
+
+    starFirst.style.visibility='visible';
+    starSecond.style.visibility='visible';
+    starThird.style.visibility='visible';
+	
+    for (let i = 0; i< pickCard.length; i++){
+	pickCard[i].setAttribute('class', 'card');
+    pickCard[i].style.pointerEvents="auto";	
+	}
+
+    matchedDelete();
+ 
+    startGame();	
+}
+
+/*TIMER: based on https://jsfiddle.net/Daniel_Hug/pvk6p/*/
+
+    function add() {
+    seconds++;
+        if (seconds >= 60) {
+        seconds = 0;
+        minutes++;
+        if (minutes >= 60) {
+            minutes = 0;
+            hours++;
+        }
+        }
+    
+    timerDisplay.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+	
+    timer();
+}
+
+function timer() {
+    t = setTimeout(add, 1000);
+}
+
+function startTimer (){
+    if(moves === 1) {
+    timer();	
+    }
+}
+
+function stopTimer () {
+    if (matched.length === 16) {
+    clearTimeout(t);
+	finalTime = timerDisplay.textContent;
+    }
+}
+
+function clearTimer () {
+    timerDisplay.textContent = "00:00:00";
+    seconds = 0; minutes = 0; hours = 0;
+}
+
+/* MODAL */
+
+function winMessage() {
+ 	modalDisplay.style.display = 'block';
+	let resultTime = document.querySelector('.final-time');
+	resultTime.textContent = finalTime;
+	
+	let resultMove = document.querySelector('.final-move');
+	resultMove.textContent = moves;
+	
+	let finalRating = document.querySelector('.final-rating');
+	
+	
+	if (moves < 32 ) {		
+		finalRating.innerHTML = '<p class="final-rating">Your rating: <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></p>';
+        finalRating.style.cssText = 'color:#fc5b03;';		
+	}
+	
+	if (moves >= 32 && moves <= 56 ) {		
+		finalRating.innerHTML = '<p class="final-rating">Your rating: <i class="fa fa-star"></i><i class="fa fa-star"></i></p>';	
+		finalRating.style.cssText = 'color:#fc5b03;';		
+	}
+	
+	if (moves >= 56 && moves <= 72 ) {
+	finalRating.innerHTML = '<p class="final-rating">Your rating: <i class="fa fa-star"></i></p>';
+	finalRating.style.cssText = 'color:#fc5b03;';	
+	}
+	
+}
+
+function closeModal() {
+ 	modalDisplay.style.display = 'none';
+}
+
+document.getElementById('modalClose').addEventListener('click', closeModal);
+document.querySelector('.again').addEventListener('click',restartGame);
