@@ -106,6 +106,7 @@ function compareCards () {
 		flipCards.push(opened[1]);		
 		opened.pop();
 		opened.pop();
+		setTimeout (flip, 500);
 			
 		} else if (opened[0].innerHTML === opened[1].innerHTML){
 		opened[0].setAttribute('class', 'card match');
@@ -128,7 +129,7 @@ function compareCards () {
 		flipBack[i].style.pointerEvents='none';
 		}	
 	}
-	setTimeout (flip, 1000);
+	setTimeout (flip, 500);
 			
 	function flip() {
 	    for(let i = 0; i < flipBack.length; i++){
