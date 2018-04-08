@@ -27,6 +27,7 @@ let matchedCards = document.getElementsByClassName('match');
 let matched = [];
 let movesCount = document.querySelector('div.moves');
 let moves = 0;
+let count = 0;
 let starFirst = document.getElementById('first-star');
 let starSecond = document.getElementById('second-star');
 let starThird = document.getElementById('third-star');
@@ -76,8 +77,12 @@ function clickOnCards() {
         if (opened.length === 2) {
 		return
 		} else
-		pickCard[i].style.pointerEvents="none";				
+		pickCard[i].style.pointerEvents="none";
+	        count++;
+		
+		if(count % 2 === 0){
 		moves++;
+		}
 			
 	    startTimer();	
 			
